@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 
-class UserRegistrationPage(BasePage):
+class RegistrationPage(BasePage):
     TITLE = "Registration"
 
     PATH = "/registration"

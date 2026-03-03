@@ -3,7 +3,6 @@ import random
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
-from pages.product_page import ProductPage
 
 
 class MainPage(BasePage):
@@ -26,8 +25,6 @@ class MainPage(BasePage):
     def open_random_product(self):
         product = self.get_random_product()
         product.click()
-
-        return ProductPage(self.driver, self.base_url)
 
     def get_random_product(self):
         products = self.find_elements(self.PRODUCTS)

@@ -7,8 +7,8 @@ logger = create_logger(__name__)
 
 
 class BasePage:
-    PATH = ""
     TITLE = ""
+    PATH = ""
 
     @property
     def url(self):

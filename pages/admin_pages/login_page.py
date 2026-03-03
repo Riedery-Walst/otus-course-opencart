@@ -4,7 +4,7 @@ import config
 from pages.base_page import BasePage
 
 
-class AdminLoginPage(BasePage):
+class LoginPage(BasePage):
     TITLE = "PrestaShop"
 
     PATH = "/administration/login"
@@ -38,6 +38,3 @@ class AdminLoginPage(BasePage):
         password.send_keys(config.ADMIN_PASSWORD)
 
         self.get_submit_button().click()
-
-        from pages.dashboard_page import DashboardPage
-        return DashboardPage(self.driver, self.base_url)
