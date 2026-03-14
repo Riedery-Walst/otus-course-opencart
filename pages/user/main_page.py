@@ -15,6 +15,7 @@ class MainPage(BasePage):
     PRODUCT_PRICE = (By.CSS_SELECTOR, ".price")
     CURRENCY_SELECTOR = (By.XPATH, '//*[@aria-label="Currency dropdown"]')
     DOLLAR_LINK = (By.XPATH, '//a[@title="US Dollar"]')
+    USER_NAME_TEXT = (By.CSS_SELECTOR, '.account')
 
     def get_currency_selector(self):
         return self.find_element(self.CURRENCY_SELECTOR)
@@ -38,3 +39,6 @@ class MainPage(BasePage):
         product = self.get_random_product()
 
         return product.find_element(*self.PRODUCT_PRICE)
+
+    def get_user_name(self):
+        return self.find_element(self.USER_NAME_TEXT).text

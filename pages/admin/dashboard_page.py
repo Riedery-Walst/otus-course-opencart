@@ -1,3 +1,5 @@
+from selenium.webdriver.support import expected_conditions as EC
+
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
@@ -17,7 +19,10 @@ class DashboardPage(BasePage):
         return self.find_element(self.LOGOUT_BUTTON)
 
     def logout(self):
+        self.wait.until(EC.visibility_of_element_located(self.EMPLOYEE_BUTTON))
         self.get_employee_button().click()
+
+        self.wait.until(EC.element_to_be_clickable(self.LOGOUT_BUTTON))
         self.get_logout_button().click()
 
     def goto_products_page(self):

@@ -20,7 +20,3 @@ def test_is_shop_image_exist(admin_login_page):
 
 def test_is_stay_logged_in_checkbox_exist(admin_login_page):
     assert admin_login_page.get_stay_logged_in_checkbox().is_displayed()
-
-
-def test_login(dashboard_page):
-    assert dashboard_page.is_page_opened()

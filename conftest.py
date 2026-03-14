@@ -1,13 +1,14 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-from tests.logger import create_logger
+from logger import create_logger
 
 
 logger = create_logger(__name__)
 
 pytest_plugins = [
-    "fixtures.page_fixtures",
+    "fixtures.pages_fixtures",
 ]
 
 
@@ -33,11 +34,21 @@ def driver(request):
 
     match browser_name:
         case "chrome":
-            driver = webdriver.Chrome()
+            options = Options()
+            options.page_load_strategy = "eager"
+            options.add_argument("--start-maximized")
+            driver = webdriver.Chrome(options=options)
+
         case "edge":
-            driver = webdriver.Edge()
+            options = webdriver.EdgeOptions()
+            options.add_argument("--start-maximized")
+            driver = webdriver.Edge(options=options)
+
         case "firefox":
-            driver = webdriver.Firefox()
+            options = webdriver.FirefoxOptions()
+            driver = webdriver.Firefox(options=options)
+            driver.maximize_window()
+
         case _:
             pytest.fail(f"Unknown browser: {browser_name}")
 

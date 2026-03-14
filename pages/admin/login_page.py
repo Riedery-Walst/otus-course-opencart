@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 import config
 from pages.base_page import BasePage
@@ -37,4 +38,4 @@ class LoginPage(BasePage):
         password = self.get_password_form()
         password.send_keys(config.ADMIN_PASSWORD)
 
-        self.get_submit_button().click()
+        self.click(self.SUBMIT_BUTTON)

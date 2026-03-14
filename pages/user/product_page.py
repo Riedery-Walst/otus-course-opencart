@@ -5,9 +5,9 @@ from pages.base_page import BasePage
 class ProductPage(BasePage):
     PRODUCT_NAME = (By.CSS_SELECTOR, "#main h1")
     PRODUCT_PRICE = (By.CLASS_NAME, "current-price-value")
-    ADD_TO_CART_BUTTON = (By.CSS_SELECTOR, "button.add-to-cart")
     PRODUCT_DESCRIPTION = (By.CSS_SELECTOR, ".product-description p")
     PROCEED_TO_CHECKOUT_BUTTON = (By.CSS_SELECTOR, ".cart-content a")
+    ADD_TO_CART_BUTTON = (By.CLASS_NAME, "add-to-cart")
     PRODUCT_QUANTITY = (By.ID, "quantity_wanted")
 
     def get_product_name(self):
