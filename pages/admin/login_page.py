@@ -1,13 +1,14 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
 import config
+from logger import create_logger
 from pages.base_page import BasePage
 
 
+logger = create_logger(__name__)
+
 class LoginPage(BasePage):
     TITLE = "PrestaShop"
-
     PATH = "/administration/login"
 
     SUBMIT_BUTTON = (By.ID, "submit_login")
@@ -32,10 +33,16 @@ class LoginPage(BasePage):
         return self.find_element(self.STAY_LOGGED_IN_CHECKBOX)
 
     def login(self):
+        logger.info(f"Logging in as {config.ADMIN_EMAIL}")
+
         email = self.get_email_form()
         email.send_keys(config.ADMIN_EMAIL)
+        logger.info("Entered email")
 
         password = self.get_password_form()
         password.send_keys(config.ADMIN_PASSWORD)
+        logger.info("Entered password")
 
+        logger.info("Click login button")
         self.click(self.SUBMIT_BUTTON)
+        logger.info("Login submitted")

@@ -1,42 +1,31 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from logger import create_logger
-
-logger = create_logger(__name__)
-
 
 class BasePage:
-    TITLE = ""
+    BASE_URL = ""
     PATH = ""
+    TITLE = ""
 
     @property
     def url(self):
-        return f"{self.base_url}{self.PATH}"
+        return f"{self.BASE_URL}{self.PATH}"
 
-    def __init__(self, driver, base_url, timeout=30):
+    def __init__(self, driver, timeout=30):
         self.driver = driver
-        self.base_url = base_url
         self.wait = WebDriverWait(driver, timeout)
 
     def open(self):
-        logger.info(f"Open {self.url}")
-
         self.driver.get(self.url)
+        return self
 
     def find_element(self, locator):
-        logger.info(f"Find {locator}")
-
         return self.wait.until(EC.visibility_of_element_located(locator))
 
     def find_elements(self, locator):
-        logger.info(f"Find {locator}")
-
         return self.wait.until(EC.presence_of_all_elements_located(locator))
 
     def click(self, locator):
-        logger.info(f"Click {locator}")
-
         element = self.wait.until(EC.element_to_be_clickable(locator))
         element.click()
 
@@ -45,5 +34,19 @@ class BasePage:
             EC.visibility_of_element_located(locator)
         )
 
+    def wait_until_invisible(self, locator, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            EC.invisibility_of_element_located(locator)
+        )
+
     def is_page_opened(self) -> bool:
         return self.wait.until(EC.title_contains(self.TITLE))
+
+    def switch_to_iframe(self, locator, timeout=10):
+        iframe = WebDriverWait(self.driver, timeout).until(
+            EC.presence_of_element_located(locator)
+        )
+        self.driver.switch_to.frame(iframe)
+
+    def switch_to_default(self):
+        self.driver.switch_to.default_content()

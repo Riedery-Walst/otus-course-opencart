@@ -1,36 +1,19 @@
-import faker
-import pytest
 from faker import Faker
 
 from conftest import driver
 from pages.user.main_page import MainPage
 
 
-def test_is_page_open(user_registration_page):
-    assert user_registration_page.is_page_opened()
+def test_registration_page_elements(opened_user_registration_page):
+    assert opened_user_registration_page.is_page_opened()
+    assert opened_user_registration_page.get_firstname_field().is_displayed()
+    assert opened_user_registration_page.get_lastname_field().is_displayed()
+    assert opened_user_registration_page.get_email_field().is_displayed()
+    assert opened_user_registration_page.get_password_field().is_displayed()
+    assert opened_user_registration_page.get_birthdate_field().is_displayed()
 
 
-def test_is_firstname_field_exist(user_registration_page):
-    assert user_registration_page.get_firstname_field().is_displayed()
-
-
-def test_is_lastname_field_exist(user_registration_page):
-    assert user_registration_page.get_lastname_field().is_displayed()
-
-
-def test_is_email_field_exist(user_registration_page):
-    assert user_registration_page.get_email_field().is_displayed()
-
-
-def test_is_password_field_exist(user_registration_page):
-    assert user_registration_page.get_password_field().is_displayed()
-
-
-def test_is_birthdate_field_exist(user_registration_page):
-    assert user_registration_page.get_birthdate_field().is_displayed()
-
-
-def register_new_user(user_registration_page, driver, base_url):
+def register_new_user(user_registration_page, driver):
     fake = Faker()
 
     name = fake.name()
@@ -44,6 +27,6 @@ def register_new_user(user_registration_page, driver, base_url):
     user_registration_page.fill_terms_amd_conditions_checkbox()
     user_registration_page.fill_customer_privacy_checkbox()
 
-    page = MainPage(driver, base_url)
+    page = MainPage(driver)
 
     assert page.get_user_name() == name + " " + last_name
