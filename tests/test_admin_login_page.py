@@ -1,3 +1,9 @@
+import allure
+
+
+@allure.feature("Страница авторизации")
+@allure.story("Проверка элементов страницы входа")
+@allure.title("Тест отображения всех элементов страницы логина")
 def test_login_page_elements(opened_admin_login_page):
     assert opened_admin_login_page.is_page_opened()
     assert opened_admin_login_page.get_email_form().is_displayed()

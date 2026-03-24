@@ -1,13 +1,13 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from logger import create_logger
 from pages.base_page import BasePage
 
-
 logger = create_logger(__name__)
 
 class RegistrationPage(BasePage):
-    TITLE = "Registration"
+    TITLE = "Регистрация"
     PATH = "/registration"
 
     FIRSTNAME_FIELD = (By.ID, "field-firstname")
@@ -15,42 +15,47 @@ class RegistrationPage(BasePage):
     EMAIL_FIELD = (By.ID, "field-email")
     PASSWORD_FIELD = (By.ID, "field-password")
     BIRTHDATE_FIELD = (By.ID, "field-birthday")
-    TERMS_AMD_CONDITIONS_CHECKBOX = (By.XPATH, '//*[@name="psgdpr"]')
-    CUSTOMER_PRIVACY_CHECKBOX = (By.XPATH, '//*[@name="customer_privacy"]')
+    TERMS_AND_CONDITIONS_CHECKBOX = (By.XPATH, '//*[@name="psgdpr"]/ancestor::label')
+    CUSTOMER_PRIVACY_CHECKBOX = (By.XPATH, '//*[@name="customer_privacy"]/ancestor::label')
     FORM_SUBMIT_BUTTON = (By.CLASS_NAME, 'form-control-submit')
 
+    @allure.step("Получить поле 'Имя'")
     def get_firstname_field(self):
-        logger.info("Get first name field")
+        logger.info("Получение поля 'Имя'")
         return self.find_element(self.FIRSTNAME_FIELD)
 
+    @allure.step("Получить поле 'Фамилия'")
     def get_lastname_field(self):
-        logger.info("Get last name field")
+        logger.info("Получение поля 'Фамилия'")
         return self.find_element(self.LASTNAME_FIELD)
 
+    @allure.step("Получить поле 'Email'")
     def get_email_field(self):
-        logger.info("Get email field")
+        logger.info("Получение поля 'Email'")
         return self.find_element(self.EMAIL_FIELD)
 
+    @allure.step("Получить поле 'Пароль'")
     def get_password_field(self):
-        logger.info("Get password field")
+        logger.info("Получение поля 'Пароль'")
         return self.find_element(self.PASSWORD_FIELD)
 
+    @allure.step("Получить поле 'Дата рождения'")
     def get_birthdate_field(self):
-        logger.info("Get birthdate field")
+        logger.info("Получение поля 'Дата рождения'")
         return self.find_element(self.BIRTHDATE_FIELD)
 
-    def fill_terms_amd_conditions_checkbox(self):
-        logger.info("Click 'Terms and Conditions' checkbox")
-        self.click(self.TERMS_AMD_CONDITIONS_CHECKBOX)
+    @allure.step("Отметить чекбокс 'Согласие с условиями'")
+    def fill_terms_and_conditions_checkbox(self):
+        logger.info("Клик по чекбоксу 'Согласие с условиями'")
+        self.click(self.TERMS_AND_CONDITIONS_CHECKBOX)
 
+    @allure.step("Отметить чекбокс 'Конфиденциальность клиента'")
     def fill_customer_privacy_checkbox(self):
-        logger.info("Click 'Customer Privacy' checkbox")
+        logger.info("Клик по чекбоксу 'Конфиденциальность клиента'")
         self.click(self.CUSTOMER_PRIVACY_CHECKBOX)
 
+    @allure.step("Отправить форму регистрации")
     def register_new_user(self):
-        logger.info("Submit registration form")
+        logger.info("Отправка формы регистрации")
         self.click(self.FORM_SUBMIT_BUTTON)
-        logger.info("Registration form submitted")
-
-    def register_new_user(self):
-        self.click(self.FORM_SUBMIT_BUTTON)
+        logger.info("Форма регистрации отправлена")

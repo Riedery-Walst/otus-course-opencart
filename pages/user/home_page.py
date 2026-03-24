@@ -1,10 +1,9 @@
 import random
-
+import allure
 from selenium.webdriver.common.by import By
 
 from logger import create_logger
 from pages.base_page import BasePage
-
 
 logger = create_logger(__name__)
 
@@ -19,36 +18,42 @@ class HomePage(BasePage):
     PRODUCTS = (By.CSS_SELECTOR, ".products .thumbnail-container")
     PRODUCT_PRICE = (By.CSS_SELECTOR, ".price")
 
+    @allure.step("Получить блок категорий")
     def get_block_categories(self):
-        logger.info("Get categories block")
+        logger.info("Получение блока категорий")
         return self.find_element(self.BLOCK_CATEGORIES)
 
+    @allure.step("Получить блок фильтров поиска")
     def get_search_filters(self):
-        logger.info("Get search filters block")
+        logger.info("Получение блока фильтров поиска")
         return self.find_element(self.SEARCH_FILTERS)
 
+    @allure.step("Получить кнопку 'Добавить в корзину'")
     def get_add_to_cart_button(self):
-        logger.info("Get 'Add to Cart' button")
+        logger.info("Получение кнопки 'Добавить в корзину'")
         return self.find_element(self.ADD_TO_CART_BUTTON)
 
+    @allure.step("Получить блок брендов в фильтрах поиска")
     def get_search_filters_brands(self):
-        logger.info("Get search filters brands block")
+        logger.info("Получение блока брендов в фильтрах поиска")
         return self.find_element(self.SEARCH_FILTERS_BRANDS)
 
+    @allure.step("Получить цену случайного продукта")
     def get_random_product_price(self):
         product = self.get_random_product()
         if product:
             price_element = product.find_element(*self.PRODUCT_PRICE)
-            logger.info(f"Random product price found: {price_element.text}")
+            logger.info(f"Цена выбранного случайного продукта: {price_element.text}")
             return price_element
-        logger.warning("No products found to get price")
+        logger.warning("На странице нет продуктов для получения цены")
         return None
 
+    @allure.step("Выбрать случайный продукт")
     def get_random_product(self):
         products = self.find_elements(self.PRODUCTS)
         if products:
             product = random.choice(products)
-            logger.info(f"Random product selected")
+            logger.info("Выбран случайный продукт")
             return product
-        logger.warning("No products found on page")
+        logger.warning("На странице нет продуктов")
         return None

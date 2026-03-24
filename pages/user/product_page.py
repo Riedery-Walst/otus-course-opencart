@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from logger import create_logger
@@ -13,29 +14,35 @@ class ProductPage(BasePage):
     ADD_TO_CART_BUTTON = (By.CLASS_NAME, "add-to-cart")
     PRODUCT_QUANTITY = (By.ID, "quantity_wanted")
 
+    @allure.step("Получить название продукта")
     def get_product_name(self):
         element = self.find_element(self.PRODUCT_NAME)
-        logger.info(f"Product name: {element.text}")
+        logger.info(f"Название продукта: {element.text}")
         return element
 
+    @allure.step("Получить цену продукта")
     def get_product_price(self):
         element = self.find_element(self.PRODUCT_PRICE)
-        logger.info(f"Product price: {element.text}")
+        logger.info(f"Цена продукта: {element.text}")
         return element
 
+    @allure.step("Получить кнопку 'Добавить в корзину'")
     def get_add_to_cart_button(self):
-        logger.info("Get 'Add to Cart' button")
+        logger.info("Получение кнопки 'Добавить в корзину'")
         return self.find_element(self.ADD_TO_CART_BUTTON)
 
+    @allure.step("Получить кнопку 'Перейти к оформлению заказа'")
     def get_proceed_to_checkout_button(self):
-        logger.info("Get 'Proceed to Checkout' button")
+        logger.info("Получение кнопки 'Перейти к оформлению заказа'")
         return self.find_element(self.PROCEED_TO_CHECKOUT_BUTTON)
 
+    @allure.step("Получить описание продукта")
     def get_product_image(self):
-        logger.info("Get product description block")
+        logger.info("Получение блока описания продукта")
         return self.find_element(self.PRODUCT_DESCRIPTION)
 
+    @allure.step("Получить количество продукта")
     def get_product_quantity(self):
         element = self.find_element(self.PRODUCT_QUANTITY)
-        logger.info(f"Product quantity field value: {element.get_attribute('value')}")
+        logger.info(f"Значение поля количества продукта: {element.get_attribute('value')}")
         return element

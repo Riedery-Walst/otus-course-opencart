@@ -1,4 +1,6 @@
+import allure
 import pytest
+from allure_commons.types import AttachmentType
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -8,9 +10,8 @@ from logger import create_logger
 logger = create_logger(__name__)
 
 pytest_plugins = [
-    "fixtures.pages_fixtures",
+    "fixtures.pages_fixtures"
 ]
-
 
 def pytest_addoption(parser):
     parser.addoption(
@@ -59,3 +60,24 @@ def driver(request):
     logger.info(f"Close browser: {browser_name}")
     driver.quit()
 
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        driver = item.funcargs.get("driver")
+        if driver is not None:
+            try:
+                allure.attach(
+                    driver.get_screenshot_as_png(),
+                    name="screenshot_on_failure",
+                    attachment_type=AttachmentType.PNG
+                )
+            except Exception as e:
+                allure.attach(
+                    str(e),
+                    name="screenshot_error",
+                    attachment_type=AttachmentType.TEXT
+                )
