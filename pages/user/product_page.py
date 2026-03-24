@@ -1,0 +1,48 @@
+import allure
+from selenium.webdriver.common.by import By
+
+from logger import create_logger
+from pages.base_page import BasePage
+
+logger = create_logger(__name__)
+
+class ProductPage(BasePage):
+    PRODUCT_NAME = (By.CSS_SELECTOR, "#main h1")
+    PRODUCT_PRICE = (By.CLASS_NAME, "current-price-value")
+    PRODUCT_DESCRIPTION = (By.CSS_SELECTOR, ".product-description p")
+    PROCEED_TO_CHECKOUT_BUTTON = (By.CSS_SELECTOR, ".cart-content a")
+    ADD_TO_CART_BUTTON = (By.CLASS_NAME, "add-to-cart")
+    PRODUCT_QUANTITY = (By.ID, "quantity_wanted")
+
+    @allure.step("Получить название продукта")
+    def get_product_name(self):
+        element = self.find_element(self.PRODUCT_NAME)
+        logger.info(f"Название продукта: {element.text}")
+        return element
+
+    @allure.step("Получить цену продукта")
+    def get_product_price(self):
+        element = self.find_element(self.PRODUCT_PRICE)
+        logger.info(f"Цена продукта: {element.text}")
+        return element
+
+    @allure.step("Получить кнопку 'Добавить в корзину'")
+    def get_add_to_cart_button(self):
+        logger.info("Получение кнопки 'Добавить в корзину'")
+        return self.find_element(self.ADD_TO_CART_BUTTON)
+
+    @allure.step("Получить кнопку 'Перейти к оформлению заказа'")
+    def get_proceed_to_checkout_button(self):
+        logger.info("Получение кнопки 'Перейти к оформлению заказа'")
+        return self.find_element(self.PROCEED_TO_CHECKOUT_BUTTON)
+
+    @allure.step("Получить описание продукта")
+    def get_product_image(self):
+        logger.info("Получение блока описания продукта")
+        return self.find_element(self.PRODUCT_DESCRIPTION)
+
+    @allure.step("Получить количество продукта")
+    def get_product_quantity(self):
+        element = self.find_element(self.PRODUCT_QUANTITY)
+        logger.info(f"Значение поля количества продукта: {element.get_attribute('value')}")
+        return element
