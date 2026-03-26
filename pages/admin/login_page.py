@@ -39,19 +39,14 @@ class LoginPage(BasePage):
 
     @allure.step("Войти в систему под пользователем")
     def login(self):
-        logger.info(f"Вход в систему под пользователем {config.ADMIN_EMAIL}")
-
         with allure.step("Ввод Email"):
             email = self.get_email_form()
             email.send_keys(config.ADMIN_EMAIL)
-            logger.info("Email введён")
 
         with allure.step("Ввод пароля"):
             password = self.get_password_form()
             password.send_keys(config.ADMIN_PASSWORD)
-            logger.info("Пароль введён")
 
         with allure.step("Нажать кнопку входа"):
             logger.info("Клик по кнопке входа")
             self.click(self.SUBMIT_BUTTON)
-            logger.info("Вход выполнен")
